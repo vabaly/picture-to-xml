@@ -1,0 +1,31 @@
+# 持续集成工作流
+# 语法：https://help.github.com/cn/articles/workflow-syntax-for-github-actions
+
+name: build
+
+on: push
+
+# 任务
+jobs:
+    test:
+        name: test
+        # 运行环境
+        runs-on: ${{ matrix.os }}
+
+        # 构建矩阵，让任务在以下平台和 Node 版本中都跑一遍
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macOS-latest]
+                node: [6, 8, 10]
+
+        # 运行步骤
+        steps:
+        # actions/checkout 为必须的，用于拉取代码到虚拟环境中
+        - uses: actions/checkout@v1
+        # actions/setup-node 非必须的，这里使用只是为了后续可以使用各种版本的 node
+        - uses: actions/setup-node@v1
+          with:
+            node-version: ${{ matrix.node }}
+        - run: |
+            npm i
+            npm run test

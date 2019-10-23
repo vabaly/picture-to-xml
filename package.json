@@ -1,0 +1,52 @@
+{
+  "name": "typescript-command-line-tool-template",
+  "version": "1.0.0",
+  "description": "typescript-command-line-tool-template",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublish": "tsc",
+    "test": "jest -i"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vabaly/typescript-command-line-tool-template.git"
+  },
+  "keywords": [],
+  "author": "vabaly",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vabaly/typescript-command-line-tool-template/issues"
+  },
+  "homepage": "https://github.com/vabaly/typescript-command-line-tool-template#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.11",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "eslint": "^6.5.1",
+    "husky": "^3.0.8",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}
