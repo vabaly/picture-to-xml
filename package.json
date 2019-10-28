@@ -1,10 +1,12 @@
 {
-  "name": "typescript-command-line-tool-template",
+  "name": "picture-to-xml",
   "version": "1.0.0",
-  "description": "typescript-command-line-tool-template",
+  "description": "picture-to-xml",
   "main": "lib/index.js",
   "scripts": {
+    "start": "tsc && node ./lib/index.js",
     "prepublish": "tsc",
+    "build": "tsc",
     "test": "jest -i"
   },
   "husky": {
@@ -15,18 +17,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vabaly/typescript-command-line-tool-template.git"
+    "url": "git+https://github.com/vabaly/picture-to-xml.git"
   },
   "keywords": [],
   "author": "vabaly",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vabaly/typescript-command-line-tool-template/issues"
+    "url": "https://github.com/vabaly/picture-to-xml/issues"
   },
-  "homepage": "https://github.com/vabaly/typescript-command-line-tool-template#readme",
+  "homepage": "https://github.com/vabaly/picture-to-xml#readme",
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
+    "@types/gm": "^1.18.5",
     "@types/jest": "^24.0.18",
     "@types/node": "^12.7.11",
     "@typescript-eslint/eslint-plugin": "^2.3.3",
@@ -48,5 +51,10 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "dependencies": {
+    "gm": "^1.23.1",
+    "js2xmlparser": "^4.0.0",
+    "sharp": "^0.23.1"
   }
 }
