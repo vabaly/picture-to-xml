@@ -1,6 +1,6 @@
 {
   "name": "picture-to-xml",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "picture-to-xml",
   "main": "lib/index.js",
   "scripts": {
@@ -54,7 +54,6 @@
   },
   "dependencies": {
     "gm": "^1.23.1",
-    "js2xmlparser": "^4.0.0",
-    "sharp": "^0.23.1"
+    "js2xmlparser": "^4.0.0"
   }
 }
