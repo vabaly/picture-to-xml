@@ -102,7 +102,7 @@ export async function getPictureData(picturePath: string, componentName: string)
   // 解析图片的路径
   const pathObject = path.parse(resolvePath);
   const {
-    name,
+    base,
     // 目录的绝对路径
     dir
   } = pathObject;
@@ -114,7 +114,7 @@ export async function getPictureData(picturePath: string, componentName: string)
 
   const data: PictureAnnotation = {
     folder,
-    filename: name,
+    filename: base,
     path: resolvePath,
     source: {
       database: 'Unknown'
