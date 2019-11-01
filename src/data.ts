@@ -127,10 +127,11 @@ export async function getPictureData(picturePath: string, componentName: string)
       truncated: 0,
       difficult: 0,
       bndbox: {
-        xmin: 0,
-        ymin: 0,
-        xmax: width,
-        ymax: height
+        // 框框的尺寸好像不能超过图片的尺寸，所以距离边缘都设为 1
+        xmin: 1,
+        ymin: 1,
+        xmax: width - 1,
+        ymax: height - 1
       }
     }
   }
