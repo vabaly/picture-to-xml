@@ -1,7 +1,7 @@
 interface PictureSource {
     database: string;
 }
-interface PictureSize {
+export interface PictureSize {
     width: number;
     height: number;
     depth: number;

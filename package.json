@@ -1,6 +1,6 @@
 {
   "name": "picture-to-xml",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "picture-to-xml",
   "main": "lib/index.js",
   "scripts": {

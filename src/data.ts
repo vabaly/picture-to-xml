@@ -2,24 +2,27 @@
  * @file 一张图片所包含的数据，程序中以 JS 形式存在，最终导出为 XML
  */
 import path from 'path';
-import gm from 'gm';
 
 // 图片源
-interface PictureSource {
+export interface PictureSource {
   // 数据库 @todo 不清楚这个属性的确切含义，看情况值都是 Unknown
   database: string;
 }
 
-// 图片尺寸
-interface PictureSize {
+// 基础的图片尺寸
+export interface PictureBaseSize {
   width: number;
   height: number;
+}
+
+//  XML 中的图片尺寸
+export interface PictureSize extends PictureBaseSize {
   // 图片深度 @todo 不清楚这个属性的确切含义，看情况值都是 3
   depth: number;
 }
 
 // 区域坐标
-interface PictureBox {
+export interface PictureBox {
   // X 坐标最小值
   xmin: number;
   // Y 坐标最小值
@@ -31,7 +34,7 @@ interface PictureBox {
 }
 
 // 图片标记区域
-interface PictureObject {
+export interface PictureObject {
   // 区域代表的组件名
   name: string;
   // @todo 不清楚这个属性的确切含义，看情况值都是 Unspecified
@@ -45,7 +48,7 @@ interface PictureObject {
 }
 
 // 图片描述对象
-interface PictureAnnotation {
+export interface PictureAnnotation {
   // 图片所在文件夹名称
   folder: string;
   // 图片文件名
@@ -62,42 +65,16 @@ interface PictureAnnotation {
   object: PictureObject;
 }
 
-/**
- * 获取图片尺寸
- * @param picturePath 图片地址
- */
-async function getPictureSize(picturePath: string): Promise<PictureSize> {
-  const pictureResolvePath = path.resolve(picturePath);
-  const size = {
-    width: 0,
-    height: 0,
-    depth: 3
-  };
-
-  try {
-    const { width, height } = await new Promise((resolve, reject) => {
-      gm(pictureResolvePath).size((error, value) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(value);
-        }
-      })
-    })
-
-    size.width = width;
-    size.height = height;
-  } catch (error) {
-    console.log(`get picture data error: ${error}`);
-  }
-
-  return size;
+// 组件数据
+export interface ComponentData {
+  box: PictureBox;
+  size: PictureBaseSize;
 }
 
 /**
  * 获取图片的数据
  */
-export async function getPictureData(picturePath: string, componentName: string): Promise<PictureAnnotation> {
+export async function getPictureData(picturePath: string, componentName: string, componentData: ComponentData): Promise<PictureAnnotation> {
   const resolvePath = path.resolve(picturePath);
   // 解析图片的路径
   const pathObject = path.parse(resolvePath);
@@ -109,8 +86,11 @@ export async function getPictureData(picturePath: string, componentName: string)
   // 只需要目录名即可
   const folder = path.basename(dir);
 
-  const size = await getPictureSize(resolvePath);
-  const { width, height } = size;
+  // const size = await getPictureSize(resolvePath);
+  const size = {
+    ...componentData.size,
+    depth: 3
+  };
 
   const data: PictureAnnotation = {
     folder,
@@ -126,13 +106,7 @@ export async function getPictureData(picturePath: string, componentName: string)
       pose: 'Unspecified',
       truncated: 0,
       difficult: 0,
-      bndbox: {
-        // 框框的尺寸好像不能超过图片的尺寸，所以距离边缘都设为 1
-        xmin: 1,
-        ymin: 1,
-        xmax: width - 1,
-        ymax: height - 1
-      }
+      bndbox: componentData.box
     }
   }
 
